@@ -3,6 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 body {
@@ -17,6 +18,10 @@ body {
     padding: 0.5rem;
     text-align: center;
 }
+.icono-casa{
+    width: 40px;
+    height: 20px;
+}
 
 .top-bar ul {
     list-style: none;
@@ -28,11 +33,13 @@ body {
 .top-bar a {
     text-decoration: none;
     color: #333;
-    font-size: 0.9rem;
+    font-size: 1rem;
+    font-weight: 700;
 }
 
 .top-bar a:hover {
     text-decoration: underline;
+    color: #2e6635;
 }
 
 /* Encabezado principal */
@@ -42,10 +49,13 @@ body {
     justify-content: center;
     align-items: center;
     padding: 1rem 2rem;
+    height: 80px;
+    flex-direction: row;
+    flex-wrap: nowrap;
 }
 
 .logo h1 {
-    font-size: 3rem;
+    font-size: 3.8rem;
     color: #fff;
     font-weight: bold;
     margin-right: 6rem;
@@ -62,60 +72,136 @@ body {
 }
 
 /* Carrusel */
+
+
+
+
+
 .carousel {
     position: relative;
+    width: 100%;
+    max-width: 100%;
     overflow: hidden;
-    text-align: center;
-    background-color: #fff;
+    min-height: 600px;
+    max-height: 600px;
 }
 
-.carousel-slide {
-    position: relative;
-    height: 60vh;
+/* Slides */
+.slides {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 100%; /* Cada slide ocupa el 100% del contenedor */
+    transition: transform 0.5s ease-in-out;
 }
 
 .slide {
+    width: 100%; /* Cada diapositiva ocupa el 100% de ancho */
+    flex-shrink: 0;
+}
+
+/* Contenedor con relación 16:9 */
+.image-container {
+    position: relative;
+    min-width: 100%;
+    padding-top: 56.25%; /* Relación de aspecto 16:9 */
+    overflow: hidden; /* Evita que las imágenes sobresalgan */
+}
+
+.image-container img {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
+    min-width: 100%;
     height: 100%;
-    object-fit: cover;
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
+    object-fit: cover; /* Asegura calidad y ajuste */
 }
 
-.slide.active {
-    opacity: 1;
-}
-
-/* Indicadores del carrusel */
-.carousel-indicators {
+/* Navegación (Flechas) */
+.navigation label {
     position: absolute;
-    bottom: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+    font-size: 30px;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 50%;
+    z-index: 10;
+    transition: background 0.3s ease;
+}
+
+.navigation label:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+
+/* Radio Buttons */
+input[type="radio"] {
+    display: none;
+}
+
+#slide1:checked ~ .slides {
+    transform: translateX(0%);
+}
+#slide2:checked ~ .slides {
+    transform: translateX(-100%);
+}
+#slide3:checked ~ .slides {
+    transform: translateX(-200%);
+}
+
+/* Indicadores */
+.indicators {
+    position: absolute;
+    bottom: 15px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: 0.5rem;
+    gap: 10px;
 }
 
-.dot {
-    width: 10px;
-    height: 10px;
-    background-color: #fff;
+.indicators label {
+    width: 15px;
+    height: 15px;
     border-radius: 50%;
-    opacity: 0.6;
+    background: rgba(255, 255, 255, 0.5);
     cursor: pointer;
-    transition: opacity 0.3s;
 }
 
-.dot.active {
-    opacity: 1;
-    background-color: #f4f4f4;
+input#slide1:checked ~ .indicators label:nth-child(1),
+input#slide2:checked ~ .indicators label:nth-child(2),
+input#slide3:checked ~ .indicators label:nth-child(3) {
+    background: #fff;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Categorías */
 .categories {
@@ -147,6 +233,7 @@ body {
 
 /* Sección "About" */
 .about {
+    display: flex;
     background-color: #4caf83; 
     color: #fff;
     display: flex;
@@ -154,7 +241,10 @@ body {
     align-items: center;
     justify-content: center;
     padding: 40px 20px;
+    flex-direction: row;
+    gap: 0px 100px;
 }
+
 
 .about-content {
     max-width: 600px;
@@ -163,14 +253,16 @@ body {
 }
 
 .about-content h1 {
-    font-size: 36px;
+    font-size: 68px;
     font-weight: bold;
     margin-bottom: 10px;
 }
 
 .about-content p {
-    font-size: 18px;
+    font-size: 24px;
     line-height: 1.5;
+    font-weight: 600;
+    word-break: break-all;
 }
 
 .about-image {
@@ -182,7 +274,7 @@ body {
 
 .about-image img {
     width: 100%;
-    border-radius: 20px;
+    border-radius: 80px;
 }
 /* Sección de experiencia */
 .experiencia {
@@ -239,10 +331,14 @@ body {
 
 /* Sección de presencia */
 .presence {
+    display: flex;
+    flex-direction: row;
     background-color: #4caf83;
     color: #fff;
     text-align: center;
     padding: 40px 20px;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
 .presence h3 {
@@ -258,10 +354,22 @@ body {
 
 .presence p {
     font-size: 16px;
+    
 }
 
 .store-link {
     color: #fff;
     font-weight: bold;
     text-decoration: underline;
+}
+.presence p a{
+    color: #c36;
+    text-decoration: none;
+}
+.presence p a:hover{
+    color: #336;
+}
+.instagram-box{
+    display: flex;
+    justify-content: center;
 }
